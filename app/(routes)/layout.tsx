@@ -1,4 +1,3 @@
-import Footer from "@/components/footer";
 import Header from "@/components/header";
 import MobileHeader from "@/components/mobile-header";
 import Navbar from "@/components/navbar";

@@ -4,7 +4,6 @@ import { Button } from "./ui/button";
 import { auth } from "@clerk/nextjs/server";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import ProductSearch from "./product-search";
 import { Chart } from "iconsax-react";
 import TopupForm from "./topup-form";
 

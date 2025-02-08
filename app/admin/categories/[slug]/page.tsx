@@ -1,8 +1,8 @@
-'use client';
-import React, { useEffect } from 'react';
+"use client";
+import React, { useEffect } from "react";
 
-import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -10,23 +10,23 @@ import {
   FormMessage,
   FormItem,
   FormLabel,
-} from '@/components/ui/form';
-import 'react-quill/dist/quill.snow.css';
-import { Editor } from '@/components/editor';
-import toast from 'react-hot-toast';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
-import { stringToSlug } from '@/lib/utils';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import EditCategoryBreadcrumb from './_components/breadcrumb';
-import { Categories } from '@prisma/client';
+} from "@/components/ui/form";
+import "react-quill/dist/quill.snow.css";
+import { Editor } from "@/components/editor";
+import toast from "react-hot-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { stringToSlug } from "@/lib/utils";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import EditCategoryBreadcrumb from "./_components/breadcrumb";
+import { Categories } from "@prisma/client";
 
 const EditCategorySchema = z.object({
-  name: z.string().trim().min(1, 'Tên danh mục không được để trống'),
+  name: z.string().trim().min(1, "Tên danh mục không được để trống"),
   slug: z.string().trim().optional(),
-  description: z.string().trim().min(1, 'Mô tả không được để trống'),
+  description: z.string().trim().min(1, "Mô tả không được để trống"),
 });
 
 const EditCategoryPage = ({ params }: { params: { slug: string } }) => {
@@ -36,9 +36,9 @@ const EditCategoryPage = ({ params }: { params: { slug: string } }) => {
   const form = useForm<z.infer<typeof EditCategorySchema>>({
     resolver: zodResolver(EditCategorySchema),
     defaultValues: {
-      name: '',
-      slug: '',
-      description: '',
+      name: "",
+      slug: "",
+      description: "",
     },
   });
 
@@ -47,7 +47,7 @@ const EditCategoryPage = ({ params }: { params: { slug: string } }) => {
       try {
         setLoading(true);
         const { data } = await axios.get<Categories>(
-          `/api/categories/${params.slug}`
+          `/api/categories/${params.slug}`,
         );
 
         form.reset({
@@ -56,28 +56,28 @@ const EditCategoryPage = ({ params }: { params: { slug: string } }) => {
           description: data.description,
         });
       } catch (error) {
-        console.log('CATEGORIES:GET', error);
-        toast.error('An error occurred. Please try again.');
+        console.log("CATEGORIES:GET", error);
+        toast.error("An error occurred. Please try again.");
       } finally {
         setLoading(false);
       }
     }
     fetchCategory();
-  }, []);
+  }, [form, params.slug]);
 
   const onSubmit = async (data: z.infer<typeof EditCategorySchema>) => {
     try {
-      if (data.slug === '') {
+      if (data.slug === "") {
         data.slug = stringToSlug(data.name);
       }
 
       await axios.put(`/api/categories/${params.slug}`, data);
       router.refresh();
-      router.push('/admin/categories');
-      toast.success('Category updated successfully');
+      router.push("/admin/categories");
+      toast.success("Category updated successfully");
     } catch (error) {
       console.error(error);
-      toast.error('An error occurred. Please try again.');
+      toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -87,8 +87,8 @@ const EditCategoryPage = ({ params }: { params: { slug: string } }) => {
 
   return (
     <div>
-      <div className='flex justify-between items-center mb-6'>
-        <h2 className='text-2xl font-semibold'>Sửa Danh Mục</h2>
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-semibold">Sửa Danh Mục</h2>
         <EditCategoryBreadcrumb />
       </div>
 
@@ -96,11 +96,11 @@ const EditCategoryPage = ({ params }: { params: { slug: string } }) => {
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}
-            className='space-y-4 bg-white p-6 rounded-xl'
+            className="space-y-4 bg-white p-6 rounded-xl"
           >
             <FormField
               control={form.control}
-              name='name'
+              name="name"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Tên danh mục</FormLabel>
@@ -113,7 +113,7 @@ const EditCategoryPage = ({ params }: { params: { slug: string } }) => {
             />
             <FormField
               control={form.control}
-              name='slug'
+              name="slug"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Slug</FormLabel>
@@ -126,7 +126,7 @@ const EditCategoryPage = ({ params }: { params: { slug: string } }) => {
 
             <FormField
               control={form.control}
-              name='description'
+              name="description"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Mô tả</FormLabel>
@@ -137,8 +137,8 @@ const EditCategoryPage = ({ params }: { params: { slug: string } }) => {
                 </FormItem>
               )}
             />
-            <div className='flex items-center gap-x-2'>
-              <Button type='submit'>Save</Button>
+            <div className="flex items-center gap-x-2">
+              <Button type="submit">Save</Button>
             </div>
           </form>
         </Form>

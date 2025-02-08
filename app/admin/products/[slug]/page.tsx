@@ -1,8 +1,8 @@
-'use client';
-import React, { useEffect } from 'react';
+"use client";
+import React, { useEffect } from "react";
 
-import { Input } from '@/components/ui/input';
-import { useForm } from 'react-hook-form';
+import { Input } from "@/components/ui/input";
+import { useForm } from "react-hook-form";
 import {
   Form,
   FormControl,
@@ -10,31 +10,31 @@ import {
   FormMessage,
   FormItem,
   FormLabel,
-} from '@/components/ui/form';
-import 'react-quill/dist/quill.snow.css';
-import { Editor } from '@/components/editor';
-import toast from 'react-hot-toast';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
-import { stringToSlug } from '@/lib/utils';
-import axios from 'axios';
-import { useRouter } from 'next/navigation';
-import EditProductBreadcrumb from './_components/breadcrumb';
-import { FileUpload } from '@/components/file-upload';
-import Image from 'next/image';
-import { Trash } from 'iconsax-react';
-import { Books, Categories } from '@prisma/client';
-import { Combobox } from '@/components/ui/combobox';
+} from "@/components/ui/form";
+import "react-quill/dist/quill.snow.css";
+import { Editor } from "@/components/editor";
+import toast from "react-hot-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import { Button } from "@/components/ui/button";
+import { stringToSlug } from "@/lib/utils";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import EditProductBreadcrumb from "./_components/breadcrumb";
+import { FileUpload } from "@/components/file-upload";
+import Image from "next/image";
+import { Trash } from "iconsax-react";
+import { Books, Categories } from "@prisma/client";
+import { Combobox } from "@/components/ui/combobox";
 
 const EditProductSchema = z.object({
-  title: z.string().trim().min(1, 'Tên sản phẩm không được để trống'),
-  categoryId: z.string().trim().min(1, 'Danh mục không được để trống'),
+  title: z.string().trim().min(1, "Tên sản phẩm không được để trống"),
+  categoryId: z.string().trim().min(1, "Danh mục không được để trống"),
   slug: z.string().trim().optional(),
-  author: z.string().trim().min(1, 'Tác giả không được để trống'),
-  description: z.string().trim().min(1, 'Mô tả không được để trống'),
-  publisher: z.string().trim().min(1, 'Nhà xuất bản không được để trống'),
-  price: z.coerce.number().min(1, 'Giá không được để trống'),
+  author: z.string().trim().min(1, "Tác giả không được để trống"),
+  description: z.string().trim().min(1, "Mô tả không được để trống"),
+  publisher: z.string().trim().min(1, "Nhà xuất bản không được để trống"),
+  price: z.coerce.number().min(1, "Giá không được để trống"),
   cover: z.string().trim().optional(),
 });
 
@@ -47,14 +47,14 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
   const form = useForm<z.infer<typeof EditProductSchema>>({
     resolver: zodResolver(EditProductSchema),
     defaultValues: {
-      title: '',
-      slug: '',
-      author: '',
-      description: '',
-      publisher: '',
-      cover: '',
+      title: "",
+      slug: "",
+      author: "",
+      description: "",
+      publisher: "",
+      cover: "",
       price: 0,
-      categoryId: '',
+      categoryId: "",
     },
   });
 
@@ -68,24 +68,24 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
           slug: data.slug,
           author: data.author,
           description: data.description,
-          publisher: data.publisher || '',
-          cover: data.cover || '',
+          publisher: data.publisher || "",
+          cover: data.cover || "",
           price: data.price,
           categoryId: data.categoryId,
         });
         setUploadedCover(data.cover);
       } catch (error) {
-        console.log('PRODUCTS:GET', error);
-        toast.error('An error occurred. Please try again.');
+        console.log("PRODUCTS:GET", error);
+        toast.error("An error occurred. Please try again.");
       }
     }
     fetchCategory();
-  }, []);
+  }, [form, params.slug]);
 
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const { data } = await axios.get('/api/categories');
+        const { data } = await axios.get("/api/categories");
         setCategories(data);
       } catch (error) {
         console.error(error);
@@ -99,17 +99,17 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
 
   const onSubmit = async (data: z.infer<typeof EditProductSchema>) => {
     try {
-      if (data.slug === '') {
+      if (data.slug === "") {
         data.slug = stringToSlug(data.title);
       }
 
       await axios.put(`/api/products/${params.slug}`, data);
       router.refresh();
-      router.push('/admin/products');
-      toast.success('Product created successfully');
+      router.push("/admin/products");
+      toast.success("Product created successfully");
     } catch (error) {
       console.error(error);
-      toast.error('An error occurred. Please try again.');
+      toast.error("An error occurred. Please try again.");
     }
   };
 
@@ -118,26 +118,26 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
   }
 
   return (
-    <div className='h-full'>
-      <div className='flex justify-between items-center mb-6'>
-        <h2 className='text-2xl font-semibold'>Thêm Sản Phẩm</h2>
+    <div className="h-full">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-2xl font-semibold">Thêm Sản Phẩm</h2>
         <EditProductBreadcrumb />
       </div>
-      <div className='flex space-x-8'>
-        <div className='bg-white rounded-xl shadow-sm flex-1'>
-          <h3 className='text-xl font-semibold border-b p-6'>
+      <div className="flex space-x-8">
+        <div className="bg-white rounded-xl shadow-sm flex-1">
+          <h3 className="text-xl font-semibold border-b p-6">
             Thông tin sản phẩm
           </h3>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className='p-6 space-y-4'
+              className="p-6 space-y-4"
             >
-              <div className='flex space-x-6 flex-col-reverse md:flex-row'>
-                <div className='flex-1 min-w-80 space-y-4'>
+              <div className="flex space-x-6 flex-col-reverse md:flex-row">
+                <div className="flex-1 min-w-80 space-y-4">
                   <FormField
                     control={form.control}
-                    name='title'
+                    name="title"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Tên sách</FormLabel>
@@ -150,7 +150,7 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
                   />
                   <FormField
                     control={form.control}
-                    name='categoryId'
+                    name="categoryId"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Danh mục</FormLabel>
@@ -171,7 +171,7 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
 
                   <FormField
                     control={form.control}
-                    name='slug'
+                    name="slug"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Slug</FormLabel>
@@ -184,7 +184,7 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
 
                   <FormField
                     control={form.control}
-                    name='author'
+                    name="author"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Tác giả</FormLabel>
@@ -197,7 +197,7 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
 
                   <FormField
                     control={form.control}
-                    name='publisher'
+                    name="publisher"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>Nhà xuất bản</FormLabel>
@@ -210,26 +210,26 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
 
                   <FormField
                     control={form.control}
-                    name='price'
+                    name="price"
                     render={({ field }) => (
                       <FormItem>
                         <FormLabel>BCoin</FormLabel>
                         <FormControl>
-                          <Input type='number' {...field} />
+                          <Input type="number" {...field} />
                         </FormControl>
                       </FormItem>
                     )}
                   />
                 </div>
                 <div>
-                  <div className='w-96 bg-white rounded-xl space-y-2'>
-                    <div className='mt-8'>
+                  <div className="w-96 bg-white rounded-xl space-y-2">
+                    <div className="mt-8">
                       {!uploadedCover && (
                         <FileUpload
-                          endpoint='imageUploader'
+                          endpoint="imageUploader"
                           onChange={(url) => {
                             if (!url) {
-                              return toast.error('Upload failed');
+                              return toast.error("Upload failed");
                             }
                             form.reset({
                               ...form.getValues(),
@@ -240,14 +240,14 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
                         />
                       )}
                       {uploadedCover && (
-                        <div className='w-full relative'>
+                        <div className="w-full relative">
                           <Button
-                            variant='destructive'
-                            className='absolute right-4 top-4 p-2'
+                            variant="destructive"
+                            className="absolute right-4 top-4 p-2"
                             onClick={() => {
                               form.reset({
                                 ...form.getValues(),
-                                cover: '',
+                                cover: "",
                               });
                               setUploadedCover(null);
                             }}
@@ -256,8 +256,8 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
                           </Button>
                           <Image
                             src={uploadedCover}
-                            alt='cover'
-                            className='w-full'
+                            alt="cover"
+                            className="w-full"
                             width={200}
                             height={100}
                           />
@@ -267,12 +267,12 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
 
                     <FormField
                       control={form.control}
-                      name='cover'
+                      name="cover"
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
                             <Input
-                              placeholder='Uploud cover'
+                              placeholder="Uploud cover"
                               disabled
                               {...field}
                             />
@@ -286,7 +286,7 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
               </div>
               <FormField
                 control={form.control}
-                name='description'
+                name="description"
                 render={({ field }) => (
                   <FormItem>
                     <FormLabel>Mô tả</FormLabel>
@@ -297,8 +297,8 @@ const EditProductPage = ({ params }: { params: { slug: string } }) => {
                   </FormItem>
                 )}
               />
-              <div className='flex items-center gap-x-2'>
-                <Button type='submit'>Save</Button>
+              <div className="flex items-center gap-x-2">
+                <Button type="submit">Save</Button>
               </div>
             </form>
           </Form>
