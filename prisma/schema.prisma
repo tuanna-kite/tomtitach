@@ -1,0 +1,115 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = []
+}
+
+datasource db {
+  provider  = "sqlite"
+  url = "file:./store.db"
+  // url       = env("DATABASE_URL")
+  // directUrl = env("DIRECT_URL")
+}
+
+model Profile {
+  id     String  @id @default(uuid())
+  userId String  @unique
+  admin  Boolean @default(false)
+  bcoin  Float   @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("profiles")
+}
+
+model Categories {
+  id          String   @id @default(uuid())
+  name        String
+  slug        String   @unique
+  description String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  books       Books[]
+
+  @@map("categories")
+}
+
+model Books {
+  id          String     @id @default(uuid())
+  title       String
+  slug        String     @unique
+  author      String
+  publisher   String
+  description String
+  price       Float
+  cover       String?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+  categoryId  String
+  category    Categories @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  isPublished Boolean    @default(false)
+  isTrending  Boolean    @default(false)
+  isHot       Boolean    @default(false)
+  isPopular   Boolean    @default(false)
+  Orders      Orders[]
+
+  @@index([categoryId], name: "categoryId")
+  @@map("books")
+}
+
+model Orders {
+  id     String @id @default(uuid())
+  userId String
+  bookId String
+  book   Books  @relation(fields: [bookId], references: [id])
+
+  fullname String
+  address  String
+  phone    String
+  district String
+  city     String
+  email    String?
+
+  status    String   @default("pending")
+  note      String?
+  total     Float
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("orders")
+}
+
+model Topup {
+  id        String   @id @default(uuid())
+  userId    String
+  amount    Float
+  orderCode String
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("topups")
+}
+
+model ExchangeRequest {
+  id        String   @id @default(uuid())
+  userId    String
+  fullname  String
+  phone     String
+  address   String
+  bookTitle String
+  quantity  Int
+  image     String
+  bcoin     Float?
+  status    String   @default("pending")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("exchange_requests")
+}
