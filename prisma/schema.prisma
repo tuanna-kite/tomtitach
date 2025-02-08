@@ -6,14 +6,15 @@
 
 generator client {
   provider        = "prisma-client-js"
-  previewFeatures = []
+  previewFeatures = ["fullTextSearch"]
 }
 
 datasource db {
-  provider  = "sqlite"
-  url = "file:./store.db"
-  // url       = env("DATABASE_URL")
-  // directUrl = env("DIRECT_URL")
+  // provider  = "sqlite"
+  // url = "file:./store.db"
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
 }
 
 model Profile {

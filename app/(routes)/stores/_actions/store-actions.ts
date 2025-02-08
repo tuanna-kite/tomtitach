@@ -13,7 +13,7 @@ type FilterProductParams = {
 export async function getProducts({
   page = 1,
   category,
-  // searchBook,
+  searchBook,
   limit = 9,
 }: FilterProductParams) {
   try {
@@ -31,7 +31,7 @@ export async function getProducts({
               slug: { equals: category },
             }
           : undefined,
-        /*OR: searchBook
+        OR: searchBook
           ? [
               {
                 title: {
@@ -44,7 +44,7 @@ export async function getProducts({
                 },
               },
             ]
-          : undefined,*/
+          : undefined,
       },
       take: limit,
       skip: (page - 1) * limit,
