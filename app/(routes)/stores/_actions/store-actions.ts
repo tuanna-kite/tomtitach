@@ -1,7 +1,7 @@
-'use server';
+"use server";
 
-import { db } from '@/lib/db';
-import { Books, Categories } from '@prisma/client';
+import { db } from "@/lib/db";
+import { Books, Categories } from "@prisma/client";
 
 type FilterProductParams = {
   page?: number;
@@ -13,11 +13,9 @@ type FilterProductParams = {
 export async function getProducts({
   page = 1,
   category,
-  searchBook,
+  // searchBook,
   limit = 9,
 }: FilterProductParams) {
-  console.log(searchBook?.split(' ').join(' & '));
-
   try {
     const books = await db.books.findMany({
       include: {
@@ -33,20 +31,20 @@ export async function getProducts({
               slug: { equals: category },
             }
           : undefined,
-        OR: searchBook
+        /*OR: searchBook
           ? [
               {
                 title: {
-                  search: searchBook.split(' ').join(' & '),
+                  search: searchBook.split(" ").join(" & "),
                 },
               },
               {
                 slug: {
-                  search: searchBook.split(' ').join(' & '),
+                  search: searchBook.split(" ").join(" & "),
                 },
               },
             ]
-          : undefined,
+          : undefined,*/
       },
       take: limit,
       skip: (page - 1) * limit,
@@ -67,7 +65,7 @@ export async function getProducts({
     };
   } catch (error) {
     console.error(error);
-    return { data: { items: [] as Books[] }, error: 'Get products failed!' };
+    return { data: { items: [] as Books[] }, error: "Get products failed!" };
   }
 }
 
@@ -77,6 +75,6 @@ export async function getCategories() {
     return { data: categories as Categories[], error: null };
   } catch (error) {
     console.error(error);
-    return { data: [] as Categories[], error: 'Get categories failed!' };
+    return { data: [] as Categories[], error: "Get categories failed!" };
   }
 }
