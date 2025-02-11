@@ -2,11 +2,9 @@ import React from "react";
 import { ShieldTick } from "iconsax-react";
 
 const ProcedureItem = ({
-  numb,
   title,
   content,
 }: {
-  numb: number;
   title: string;
   content: string;
 }) => {
@@ -31,22 +29,18 @@ const Procedure = () => {
       </h2>
       <div className="grid grid-cols-1 md:gap-y-0 md:grid-cols-4 gap-6">
         <ProcedureItem
-          numb={1}
           title="NGUYÊN LIỆU SẠCH SẼ, CHUẨN CHỈ"
           content="Chọn lọc từ muối biển, tôm khô, ớt, tỏi tươi – đảm bảo an toàn, chất lượng."
         />
         <ProcedureItem
-          numb={2}
           title="HƯƠNG VỊ ĐẶC BIỆT - ĐA DẠNG CÁCH DÙNG"
           content="Chấm trái cây, bánh tráng, ướp thịt nướng – đậm đà, kích thích vị giác."
         />
         <ProcedureItem
-          numb={3}
           title="QUY TRÌNH SẢN XUẤT HIỆN ĐẠI"
           content="Sản xuất khép kín, giữ trọn hương vị tự nhiên, đảm bảo vệ sinh an toàn thực phẩm."
         />
         <ProcedureItem
-          numb={4}
           title="HƯƠNG VỊ ĐẶC BIỆT - ĐA DẠNG CÁCH DÙNG"
           content="Rang tay tỉ mỉ, giữ nguyên tinh hoa muối tôm chuẩn vị Tây Ninh."
         />
