@@ -28,7 +28,7 @@ const MainLayout = async ({ children }: { children: ReactNode }) => {
       <Navbar />
       <Header />
       <MobileHeader />
-      <div className="w-full mb-10 flex-1">{children}</div>
+      <div className="w-full flex-1">{children}</div>
       <div className="py-16 bg-primary-dark">
         {/*<Footer />*/}
         <Footer2 />

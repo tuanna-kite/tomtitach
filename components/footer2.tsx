@@ -16,7 +16,7 @@ function Footer2() {
           tại đây!
         </h1>
 
-        <p>Dễ dàng mua hàng, giao tận nơi</p>
+        <p>Chốt đơn nhanh chóng, giao tận tay!</p>
 
         <ul className="space-y-2 pt-4">
           <li className="flex space-x-2 items-center">

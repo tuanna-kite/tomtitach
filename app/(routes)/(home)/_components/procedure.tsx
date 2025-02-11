@@ -1,4 +1,5 @@
 import React from "react";
+import { ShieldTick } from "iconsax-react";
 
 const ProcedureItem = ({
   numb,
@@ -10,12 +11,14 @@ const ProcedureItem = ({
   content: string;
 }) => {
   return (
-    <div className="flex flex-col items-center space-y-3">
-      <div className="flex justify-center items-center w-8 h-8 bg-black text-white rounded-full">
-        {numb}
+    <div className=" flex flex-col items-center space-y-3 bg-primary-dark px-6 py-8 text-white rounded-2xl">
+      <div>
+        <ShieldTick size={32} color="white" />
       </div>
-      <h3 className="text-lg font-semibold pt-4 text-center">{title}</h3>
-      <p className="text-center text-sm">{content}</p>
+      <h3 className="text-lg font-semibold pt-4 text-center text-primary inter">
+        {title}
+      </h3>
+      <p className="text-center text-sm inter font-light">{content}</p>
     </div>
   );
 };
@@ -26,7 +29,7 @@ const Procedure = () => {
       <h2 className="text-3xl font-semibold text-center">
         Vì sao bạn nên chọn chúng tôi?
       </h2>
-      <div className="grid grid-cols-2 max-sm:gap-y-16 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:gap-y-0 md:grid-cols-4 gap-6">
         <ProcedureItem
           numb={1}
           title="NGUYÊN LIỆU SẠCH SẼ, CHUẨN CHỈ"

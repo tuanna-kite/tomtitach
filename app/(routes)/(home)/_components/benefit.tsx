@@ -7,9 +7,11 @@ import React from "react";
 const Benefit = () => {
   return (
     <div className="flex items-center space-x-0 flex-col-reverse md:flex-row md:space-x-16 py-20 lg:space-x-40">
-      <div className="space-y-6 flex-1 max-sm:px-4">
-        <h2 className="text-3xl font-semibold">Sứ mệnh</h2>
-        <div className="space-y-4">
+      <div className="space-y-8 flex-1 max-sm:px-4">
+        <h2 className="text-3xl font-semibold text-center md:text-left">
+          Sứ mệnh
+        </h2>
+        <div className="space-y-4 text-center md:text-left">
           <p>
             Từ những ruộng muối và vườn ớt Tây Ninh, <b>Tôm Tí Tách</b> ra đời
             với sứ mệnh mang đặc sản quê hương đến gần hơn với người Việt xa xứ.
@@ -25,10 +27,12 @@ const Benefit = () => {
             tình yêu dành cho đất mẹ.
           </p>
         </div>
-        <Button size="lg">
-          <Link href="/about">Về chúng tôi</Link>
-          <ArrowRight size={20} className="ml-3" />
-        </Button>
+        <div className="flex justify-center md:justify-start">
+          <Button size="lg">
+            <Link href="/about">Về chúng tôi</Link>
+            <ArrowRight size={20} className="ml-3" />
+          </Button>
+        </div>
       </div>
       <div className="flex-1 max-sm:mb-8 max-sm:px-4">
         <Image
