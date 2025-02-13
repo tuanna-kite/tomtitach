@@ -7,7 +7,6 @@ import { auth } from "@clerk/nextjs/server";
 import TopupForm from "@/components/topup-form";
 import PaymentButton from "../../_components/payment-button";
 import { toCurrency } from "@/lib/utils";
-import qs from "querystring";
 import React from "react";
 import PopupQr from "@/app/(routes)/order/_components/popup-qr";
 
