@@ -4,8 +4,9 @@ import { Button } from "./ui/button";
 import { auth } from "@clerk/nextjs/server";
 import { UserButton } from "@clerk/nextjs";
 import Link from "next/link";
-import { Chart } from "iconsax-react";
 import TopupForm from "./topup-form";
+// import { Chart } from "iconsax-react";
+// import TopupForm from "./topup-form";
 
 const Header = async () => {
   const { userId } = auth();
@@ -29,11 +30,6 @@ const Header = async () => {
         {userId ? (
           <div className="flex items-center space-x-2">
             <TopupForm size="sm" userId={userId} />
-            <Link href="/order/history">
-              <Button variant="ghost">
-                <Chart size={20} className="text-gray-500 hover:text-primary" />
-              </Button>
-            </Link>
             <UserButton />
           </div>
         ) : (

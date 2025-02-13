@@ -1,5 +1,5 @@
-'use client';
-import React, { useEffect } from 'react';
+"use client";
+import React, { useEffect } from "react";
 import {
   Dialog,
   DialogContent,
@@ -8,22 +8,21 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from '@/components/ui/dialog';
-import { Button } from './ui/button';
-import { cn } from '@/lib/utils';
-import qs from 'querystring';
-import Image from 'next/image';
-import { Triangle } from 'react-loader-spinner';
-import { createTopupOrder } from '@/app/(routes)/order/_action/order-action';
+} from "@/components/ui/dialog";
+import { Button } from "./ui/button";
+import { cn } from "@/lib/utils";
+import qs from "querystring";
+import Image from "next/image";
+import { Triangle } from "react-loader-spinner";
+import { createTopupOrder } from "@/app/(routes)/order/_action/order-action";
 
 const amountOptions = [50000, 100000, 200000, 300000, 500000, 1000000];
-const QR_LINK =
-  'https://img.vietqr.io/image/vietinbank-100003535252-compact.jpg';
+const QR_LINK = "https://img.vietqr.io/image/TCB-19036560147010-compact.jpg";
 
 function makeid(length: number) {
-  let result = '';
+  let result = "";
   const characters =
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
   const charactersLength = characters.length;
   let counter = 0;
   while (counter < length) {
@@ -35,10 +34,10 @@ function makeid(length: number) {
 
 const TopupForm = ({
   userId,
-  size = 'default',
+  size = "default",
 }: {
   userId: string;
-  size?: 'sm' | 'default';
+  size?: "sm" | "default";
 }) => {
   const [amount, setAmount] = React.useState(amountOptions[1]);
   const [qrCode, setQRCode] = React.useState<string | null>(null);
@@ -76,12 +75,12 @@ const TopupForm = ({
       } else {
         setError(true);
         setLoading(false);
-        setMessage('Đã có lỗi xảy ra, vui lòng thử lại sau');
+        setMessage("Đã có lỗi xảy ra, vui lòng thử lại sau");
       }
     } catch (error) {
       console.log(error);
       setError(true);
-      setMessage('Đã có lỗi xảy ra, vui lòng thử lại sau');
+      setMessage("Đã có lỗi xảy ra, vui lòng thử lại sau");
     }
   };
 
@@ -99,25 +98,27 @@ const TopupForm = ({
     <Dialog>
       <DialogTrigger asChild>
         <Button
-          className={cn('w-full', size === 'sm' && 'text-sm py-1')}
-          variant={size === 'sm' ? 'ghost' : 'default'}
+          className={cn("w-full", size === "sm" && "text-sm py-1")}
+          variant={size === "sm" ? "ghost" : "default"}
         >
-          Nạp Bcoin
+          Nạp Points
         </Button>
       </DialogTrigger>
-      <DialogContent className='bg-white p-8'>
+      <DialogContent className="bg-white p-8">
         <DialogHeader>
-          <DialogTitle>Nạp Bcoin</DialogTitle>
-          <DialogDescription>Tỷ lệ quy đổi: 1.0000đ = 1 Coin</DialogDescription>
+          <DialogTitle>Nạp Points</DialogTitle>
+          <DialogDescription>
+            Tỷ lệ quy đổi: 1.0000đ = 1 Point
+          </DialogDescription>
         </DialogHeader>
-        <div className='grid grid-cols-3 gap-4 py-4'>
+        <div className="grid grid-cols-3 gap-4 py-4">
           {amountOptions.map((option) => (
             <Button
               key={option}
               onClick={() => onSelectedAmount(option)}
               className={cn(
-                'bg-gray-100 text-black shadow-none hover:bg-primary/20 ',
-                option === amount && 'bg-primary text-white'
+                "bg-gray-100 text-black shadow-none hover:bg-primary/20 ",
+                option === amount && "bg-primary text-white",
               )}
             >
               {option.toLocaleString()}
@@ -128,29 +129,29 @@ const TopupForm = ({
           <div>
             <Image
               src={qrCode}
-              alt='qrCode'
+              alt="qrCode"
               width={300}
               height={300}
-              className={`mx-auto ${loading && 'hidden'}`}
+              className={`mx-auto ${loading && "hidden"}`}
             />
           </div>
         )}
         {loading && (
           <Triangle
             visible={true}
-            height='80'
-            width='80'
-            color='#0056D2'
-            ariaLabel='triangle-loading'
+            height="80"
+            width="80"
+            color="#0056D2"
+            ariaLabel="triangle-loading"
             wrapperStyle={{}}
-            wrapperClass='mx-auto'
+            wrapperClass="mx-auto"
           />
         )}
         <DialogFooter>
           <Button
-            type='button'
+            type="button"
             onClick={onCreateTopupOrder}
-            className={cn('w-full', (loading || message) && 'bg-gray-400')}
+            className={cn("w-full", (loading || message) && "bg-gray-400")}
             disabled={loading || !!message}
           >
             Đã chuyển khoản
@@ -159,15 +160,15 @@ const TopupForm = ({
         {message && (
           <div
             className={`text-sm text-center font-semibold ${
-              error ? 'text-red-600' : 'text-green-700'
+              error ? "text-red-600" : "text-green-700"
             }`}
           >
             {message}
           </div>
         )}
-        <div className='text-sm text-center text-gray-500 font-light'>
-          Nếu chưa nhận được BCoin vui lòng liên hệ tới số Zalo:{' '}
-          <span className='font-semibold'>0123456789</span>
+        <div className="text-sm text-center text-gray-500 font-light">
+          Nếu chưa nhận được BCoin vui lòng liên hệ tới số Zalo:{" "}
+          <span className="font-semibold">0123456789</span>
         </div>
       </DialogContent>
     </Dialog>

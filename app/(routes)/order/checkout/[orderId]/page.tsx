@@ -7,6 +7,9 @@ import { auth } from "@clerk/nextjs/server";
 import TopupForm from "@/components/topup-form";
 import PaymentButton from "../../_components/payment-button";
 import { toCurrency } from "@/lib/utils";
+import qs from "querystring";
+import React from "react";
+import PopupQr from "@/app/(routes)/order/_components/popup-qr";
 
 // TODO: Create Popup have QR code for payment with button "I have paid". When user click on the button, update order status to 'paid' and redirect to order detail page
 const PaymentPage = async ({ params }: { params: { orderId: string } }) => {
@@ -33,7 +36,16 @@ const PaymentPage = async ({ params }: { params: { orderId: string } }) => {
       },
     },
   });
-  if (!order) return redirect("/404");
+
+  if (!order) {
+    return redirect("/404");
+  }
+
+  const topupInfo = {
+    amount: order.total,
+    addInfo: order.id,
+  };
+
   return (
     <div className="pt-[56px] md:pt-[88px]">
       <div className="flex flex-col space-y-8 p-8 w-full max-w-5xl xl:px-0 mx-auto">
@@ -51,7 +63,7 @@ const PaymentPage = async ({ params }: { params: { orderId: string } }) => {
               </Button>
             </div>
             <div className="space-y-2">
-              <div className="font-semibold">Nguyễn Văn A</div>
+              <div className="font-semibold">{order.fullname}</div>
               <div className="font-light text-gray-500">
                 {order.phone}
                 {order.email?.length ? ` - ${order.email}` : ""}
@@ -62,6 +74,7 @@ const PaymentPage = async ({ params }: { params: { orderId: string } }) => {
               </div>
             </div>
           </div>
+
           <div className="space-y-4">
             <div className="font-semibold text-xl">Sản phẩm</div>
             <div className="flex space-x-4 items-center">
@@ -93,7 +106,7 @@ const PaymentPage = async ({ params }: { params: { orderId: string } }) => {
                 </div>
               </div>
               <div className="flex justify-between">
-                <div className="font-semibold">Bcoin bạn có</div>
+                <div className="font-semibold">Points bạn có</div>
                 <div className="flex space-x-1">
                   <span className="text-primary font-semibold">
                     {profile!.bcoin}
@@ -109,9 +122,8 @@ const PaymentPage = async ({ params }: { params: { orderId: string } }) => {
               profile!.bcoin < order.book.price && (
                 <div className="flex flex-col items-center space-y-3">
                   <div className="text-red-500 font-semibold text-right w-full">
-                    Số dư không đủ
+                    Số dư Points không đủ
                   </div>
-                  {/* <Button className='py-5 w-full'>Nạp thêm Bcoin</Button> */}
                   <TopupForm userId={userId!} />
                 </div>
               )}
@@ -120,6 +132,9 @@ const PaymentPage = async ({ params }: { params: { orderId: string } }) => {
                 Đã thanh toán
               </div>
             )}
+            <div>
+              <PopupQr {...topupInfo} />
+            </div>
           </div>
         </div>
       </div>
