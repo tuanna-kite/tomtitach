@@ -42,7 +42,7 @@ export default async function Home() {
       <section className="py-10 px-8 xl:px-0">
         <div className="w-full space-y-4 max-w-5xl mx-auto">
           <h2 className="text-3xl">Combo Bánh Tráng Mix Muối Tôm</h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 lg:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
             {combo.map((book) => (
               <BookCard key={book.id} data={book} />
             ))}

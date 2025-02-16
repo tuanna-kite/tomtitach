@@ -1,5 +1,5 @@
-'use client';
-import React, { useEffect, useState } from 'react';
+"use client";
+import React, { useEffect, useState } from "react";
 import {
   Pagination,
   PaginationContent,
@@ -7,25 +7,25 @@ import {
   PaginationLink,
   PaginationNext,
   PaginationPrevious,
-} from '@/components/ui/pagination';
-import BookCard from '@/components/book-card';
-import { useSearchParams } from 'next/navigation';
-import { Books } from '@prisma/client';
-import toast from 'react-hot-toast';
-import { getProducts } from '../_actions/store-actions';
-import { CirclesWithBar } from 'react-loader-spinner';
+} from "@/components/ui/pagination";
+import BookCard from "@/components/book-card";
+import { useSearchParams } from "next/navigation";
+import { Books } from "@prisma/client";
+import toast from "react-hot-toast";
+import { getProducts } from "../_actions/store-actions";
+import { CirclesWithBar } from "react-loader-spinner";
 
 const ProductGrid = () => {
   const [loading, setLoading] = useState(true);
 
   const searchParams = useSearchParams();
-  const pageParams = searchParams.get('page');
+  const pageParams = searchParams.get("page");
   const page = pageParams ? Number(pageParams) : 1;
-  const searchBook = searchParams.get('search');
+  const searchBook = searchParams.get("search");
 
   const [nPages, setNPages] = useState(0);
   const [items, setItems] = useState<Books[]>([]);
-  const category = searchParams.get('category');
+  const category = searchParams.get("category");
 
   useEffect(() => {
     async function fetchData() {
@@ -43,7 +43,7 @@ const ProductGrid = () => {
         setNPages(Math.ceil(data.total! / 9));
       } catch (error) {
         console.error(error);
-        toast.error('Có lỗi xảy ra, vui lòng thử lại sau');
+        toast.error("Có lỗi xảy ra, vui lòng thử lại sau");
       } finally {
         setLoading(false);
       }
@@ -53,17 +53,17 @@ const ProductGrid = () => {
 
   if (loading) {
     return (
-      <div className='h-full flex-1 flex item-center justify-center'>
+      <div className="h-full flex-1 flex item-center justify-center">
         <CirclesWithBar
-          height='100'
-          width='100'
-          color='#0056D2'
-          outerCircleColor='#0056D2'
-          innerCircleColor='#0056D2'
-          barColor='#0056D2'
-          ariaLabel='circles-with-bar-loading'
+          height="100"
+          width="100"
+          color="#0056D2"
+          outerCircleColor="#0056D2"
+          innerCircleColor="#0056D2"
+          barColor="#0056D2"
+          ariaLabel="circles-with-bar-loading"
           wrapperStyle={{}}
-          wrapperClass=''
+          wrapperClass=""
           visible={true}
         />
       </div>
@@ -71,13 +71,13 @@ const ProductGrid = () => {
   }
 
   return (
-    <div className='flex-1'>
+    <div className="flex-1">
       {items.length === 0 ? (
-        <div className='w-full text-center text-gray-500 font-light text-sm'>
+        <div className="w-full text-center text-gray-500 font-light text-sm">
           Không có kết quả
         </div>
       ) : (
-        <div className='grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-8'>
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-x-12 gap-y-8">
           {items.map((book) => (
             <BookCard key={book.id} data={book} />
           ))}
@@ -85,45 +85,44 @@ const ProductGrid = () => {
       )}
 
       {items.length > 0 && (
-        <div className='w-full mt-10'>
+        <div className="w-full mt-10">
           <Pagination>
             <PaginationContent>
               {page > 1 && (
                 <PaginationItem>
-                  <PaginationPrevious href='#' />
+                  <PaginationPrevious href={`/stores?page=${page - 1}`} />
                 </PaginationItem>
               )}
-              <PaginationItem>
-                <PaginationLink
-                  href={`/stores?page=${
-                    page == 1 ? page : page === nPages ? page - 2 : page - 1
-                  }`}
-                  isActive={page === 1}
-                >
-                  {page == 1 ? page : page === nPages ? page - 2 : page - 1}
-                </PaginationLink>
-              </PaginationItem>
-              {nPages >= 2 && (
+
+              {page > 2 && (
                 <PaginationItem>
                   <PaginationLink
-                    href={`/stores?page=${
-                      page === 1 ? page + 1 : page === nPages ? page - 1 : page
-                    }`}
-                    isActive={page != 1 && page != nPages}
+                    href={`/stores?page=${page - 2}`}
+                    isActive={page === 1}
                   >
-                    {page === 1 ? page + 1 : page === nPages ? page - 1 : page}
+                    {page - 2}
                   </PaginationLink>
                 </PaginationItem>
               )}
-              {nPages >= 3 && (
+
+              {page > 1 && (
                 <PaginationItem>
                   <PaginationLink
-                    href={`/stores?page=${
-                      page === nPages ? page : page === 1 ? page + 2 : page + 1
-                    }`}
-                    isActive={page === nPages}
+                    href={`/stores?page=${page - 1}`}
+                    isActive={page === 1}
                   >
-                    {page === nPages ? page : page === 1 ? page + 2 : page + 1}
+                    {page - 1}
+                  </PaginationLink>
+                </PaginationItem>
+              )}
+
+              {page < nPages && (
+                <PaginationItem>
+                  <PaginationLink
+                    href={`/stores?page=${page + 1}`}
+                    isActive={page != 1 && page != nPages}
+                  >
+                    {page + 1}
                   </PaginationLink>
                 </PaginationItem>
               )}

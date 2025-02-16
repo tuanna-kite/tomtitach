@@ -1,14 +1,20 @@
-import Image from 'next/image';
-import React from 'react';
+import Image from "next/image";
+import React from "react";
 
 const AboutPage = () => {
   return (
-    <div className='pt-[56px] md:pt-[88px] pb-10'>
+    <div className="pt-[56px] md:pt-[88px] pb-10">
       <div>
-        <Image src='/about-bg.png' width={1440} height={500} alt='bg' />
+        <Image
+          src="/about-bg.png"
+          width={1440}
+          height={500}
+          alt="bg"
+          className="w-full"
+        />
       </div>
-      <div className='max-w-4xl mx-auto space-y-8 mt-16 font-light px-8 lg:px-0'>
-        <h2 className='text-3xl font-semibold'>Về chúng tôi</h2>
+      <div className="max-w-4xl mx-auto space-y-8 mt-16 font-light px-8 lg:px-0">
+        <h2 className="text-3xl font-semibold">Về chúng tôi</h2>
         <div>
           Xuất phát từ tình yêu sâu sắc dành cho tri thức và mong muốn lan tỏa
           văn hóa đọc đến cộng đồng, Dương Nhật Nam - nhà sáng lập BookVault đã
@@ -19,8 +25,8 @@ const AboutPage = () => {
           BookVault không chỉ để trao đổi sách, mà còn để kết nối con người và
           tri thức, tạo nên một cộng đồng gắn kết bởi niềm đam mê đọc sách.
         </div>
-        <div className='space-y-2'>
-          <p className='font-semibold text-lg'>Sứ mệnh</p>
+        <div className="space-y-2">
+          <p className="font-semibold text-lg">Sứ mệnh</p>
           <p>
             Ứng dụng được tạo ra với sứ mệnh thúc đẩy thói quen đọc sách bền
             vững và xây dựng một cộng đồng đọc sách sôi động. Chúng tôi mong
@@ -29,8 +35,8 @@ const AboutPage = () => {
             chi phí, đồng thời giảm thiểu lãng phí sách, bảo vệ môi trường.
           </p>
         </div>
-        <div className='space-y-2'>
-          <p className='font-semibold text-lg'>Tầm nhìn</p>
+        <div className="space-y-2">
+          <p className="font-semibold text-lg">Tầm nhìn</p>
           <p>
             Chúng tôi hướng đến việc trở thành nền tảng trao đổi sách hàng đầu
             tại Việt Nam, một nơi mà mọi người có thể dễ dàng tìm thấy những
@@ -40,9 +46,9 @@ const AboutPage = () => {
             cho một xã hội học tập suốt đời.
           </p>
         </div>
-        <div className='space-y-2'>
-          <p className='font-semibold text-lg'>Giá trị cốt lõi</p>
-          <ol className='space-y-2'>
+        <div className="space-y-2">
+          <p className="font-semibold text-lg">Giá trị cốt lõi</p>
+          <ol className="space-y-2">
             <li>
               <b>1. Chia sẻ tri thức:</b> Mỗi cuốn sách được trao đổi là một lần
               chia sẻ kiến thức và cảm hứng cho người khác.
