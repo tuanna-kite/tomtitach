@@ -22,7 +22,7 @@ export const navbarRoutes: NavbarRouteItem[] = [
 export const BrandConfig = {
   brandName: "TomTiTach",
   address: "433 Hậu Giang, Phường 11, Quận 6, TP.Hồ Chí Minh, Việt Nam",
-  email: "info@tomtitach.com",
+  email: "tringuyen1262@gmail.com",
   phone: "(+84) 345 622 345 hoặc +1 (832) 818 5270",
   copyright: "Copyright © 2024. All rights reserved.",
 };
